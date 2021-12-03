@@ -1,0 +1,27 @@
+{
+  "name": "pictionaryx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/mineitan/pictionaryx.git"
+  },
+  "keywords": [
+    "scribble",
+    "pictionaryx"
+  ],
+  "author": "Cyaa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/mineitan/pictionaryx/issues"
+  },
+  "homepage": "https://gitlab.com/mineitan/pictionaryx#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.4.0"
+  }
+}
