@@ -3,6 +3,22 @@ const app = express()
 
 const Socket = require('socket.io')
 
+const uuid = require('uuid').v3
+// Server info setup
+let info = {
+    users:0,
+
+}
+let names = {}
+let rooms = {}
+// Player info setup
+class Player{
+    constructor(sid,name) {
+        this.sid = sid
+        this.name = name
+    }
+    get all(){ return({sid:this.sid,name:this.name})}
+}
 
 
 // Express bullshittery
@@ -29,4 +45,18 @@ let server = app.listen(3000, () => {
 var io = Socket(server)
 io.on('connection',(socket) => {
     console.log(`Hello, ${socket.id}}`)
+    io.sockets.emit('con',socket.id)
+})
+
+io.on('newPlayer',(socket) => {
+    console.log(socket.id)
+})
+
+io.on('newRoom',(roomName,callback) => {
+    const newRoom = {
+        name: roomName,
+        id: uuid(),
+        sockets: []
+    }
+    rooms[newRoom.id] = newRoom
 })
