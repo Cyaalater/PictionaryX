@@ -13,3 +13,16 @@
     margin-bottom: 1em;
     background-color: rgba(128, 128, 128, 0.74);
 }
+
+#messages p{
+    margin: 0;
+}
+.column-main{
+    display: flex;
+    justify-content: space-between;
+}
+
+.column-right{
+    background-color: goldenrod;
+    width: 8em;
+}
