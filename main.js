@@ -5,15 +5,9 @@ const app = express()
 const Socket = require('socket.io')
 
 const uuid = require('uuid').v4
-// Server info setup
-let info = {
-    users: 0,
 
-}
 // Objects used as dictionary
-let names = {}
 let rooms = {}
-var socketsRooms = {}
 var socketData = {} // Struct: = {1:{room:'',name:''},2:{room:'',name:''}}
 // Player info setup
 
@@ -64,6 +58,7 @@ io.on('connection', (socket) => {
 
     socket.on('newPlayer', function (data,callback) {
         console.log(data)
+        if (data.name.length < 6) {return;} // Name length needs to be above 6 letters
         socketData[socket.id] = {
             room:'',
             name:data.name
@@ -74,7 +69,8 @@ io.on('connection', (socket) => {
     socket.on('createRoom', (roomName,callback) => {
         if(socketData[socket.id] == undefined){
             return;
-        }
+        } // Mitigation to ignore any socket that contains no data in the server
+        else if(roomName.length < 4) {return;} // Lobby Name length needs to be above 4 letters
         const newRoom = {
             name: roomName,
             id: uuid(),
@@ -89,7 +85,9 @@ io.on('connection', (socket) => {
     socket.on('joinRoom', async (roomId,callback) => {
         if(socketData[socket.id] == undefined){
             return;
-        }
+        } // Mitigation to ignore any socket that contains no data in the server
+        else if(rooms[roomId] == undefined) {return;}
+        // Mitigation to ignore socket that suggest non-existant lobby id
         const room = rooms[roomId];
         await joinRoom(socket, room);
         console.log(rooms[roomId])
@@ -104,6 +102,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('sendText', (textValue) => {
+        if(socketData[socket.id] == undefined) {return;} // Mitigation to ignore any socket that contains no data in the server
         console.log(`Group id:\n${JSON.stringify(socketData[socket.id].room)}\nText: ${textValue}`)
         // const room = rooms[socket.roomId]
         // const roomSocketId = room.id
