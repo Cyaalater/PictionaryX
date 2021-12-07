@@ -1,3 +1,13 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#name_div, #join_div, #create_div{
+    margin-bottom: 3em;
+}
+
 #name{
     text-align: left;
     justify-content: center;
