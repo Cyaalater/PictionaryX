@@ -44,10 +44,6 @@ app.get('/canvas', (req, res) => {
     res.sendFile('./src/canvas.html', { root: __dirname })
 })
 
-app.get('/test',(req,res) => {
-    res.sendFile('./src/test.html', {root:__dirname})
-})
-
 app.use((req, res) => {
     res.sendFile('./src/404.html', { root: __dirname });
 })
