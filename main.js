@@ -32,6 +32,12 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res) => {
     res.sendFile('./src/home.html', { root: __dirname })
 })
+app.get('/game', (req, res) => {
+    res.sendFile('./src/game.html', { root: __dirname })
+})
+app.get('/canvas', (req, res) => {
+    res.sendFile('./src/canvas.html', { root: __dirname })
+})
 
 app.use((req, res) => {
     res.sendFile('./src/404.html', { root: __dirname });
