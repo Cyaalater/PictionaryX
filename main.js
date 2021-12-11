@@ -6,10 +6,42 @@ const Socket = require('socket.io')
 
 const uuid = require('uuid').v4
 
-// Objects used as dictionary
+
+
+// After game starts, all data should be contanied within the STRUCT ONLY!!
+/**
+ * STRUCT:
+ * {
+ *      name   : *name*,
+ *      id     : UUID(),
+ *      sockets: [*sockets*]
+ *      data:  : {
+ *                  teams: { sortedPlayers: [[
+ *                          2 Sockets
+ *                          ]#Team number one,
+ *                         [
+ *                          2 Sockets
+ *                         ]#Team number two]
+ *                           
+ *                          }     
+ * 
+ *               }
+ * }
+ */
 let rooms = {}
+
+
+// It would be ideal that when socket fully enters a started game, we can hopefully remove his socketData
+/**
+ * STRUCT:
+ * {
+ *      room: *room*,
+ *      name: *name*,
+ *      team: *team*
+ * }
+ */
 var socketData = {} // Struct: = {1:{room:'',name:''},2:{room:'',name:''}}
-// Player info setup
+
 
 
 /**
@@ -76,7 +108,23 @@ io.on('connection', (socket) => {
         const newRoom = {
             name: roomName,
             id: uuid(),
-            sockets: []
+            sockets: [],
+            data: {
+                teams: [
+                    {
+                        "players": [
+
+                        ],
+                        "score": 0
+                    },
+                    {
+                        "players": [
+
+                        ],
+                        "score": 0
+                    }
+                ]
+            }
         }
         rooms[newRoom.id] = newRoom
         joinRoom(socket, newRoom)
@@ -109,6 +157,17 @@ io.on('connection', (socket) => {
         // const room = rooms[socket.roomId]
         // const roomSocketId = room.id
         io.to(socketData[socket.id].room).emit("textSend",{name:socketData[socket.id].name,text:textValue})
+    })
+
+    /**
+     * @param data Number of team the socket chose
+     */
+    socket.on('TeamJoin',(data) => {
+        if(socketData[socket.id] == undefined) {return;} // Mitigation to ignore any socket that contains no data in the server
+        let players_in_team = rooms[socketData[socket.id].room].data.teams[data].players
+        if(players_in_team.length < 2){
+            players_in_team += socket.id
+        }
     })
 })
 

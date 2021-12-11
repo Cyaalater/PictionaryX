@@ -1,0 +1,46 @@
+{
+    "__mainHeader":"At lobby",
+
+    "name":"*name*",
+    "id":"uuid()",
+    "sockets":[
+        {"socket":1},
+        {"socket":2}
+    ],
+
+
+    "__secondaryHeader":"At lobby",
+
+    "data": {
+        "teams": [
+            {
+                "__title":"team1",
+                "players": [
+                    "socket_id_1",
+                    "socket_id_2"
+                ],
+                "score":"__team1_score"
+            },
+            {
+                "__title":"team2",
+                "players": [
+                    "socket_id_3",
+                    "socket_id_4"
+                ],
+                "score":"__team2_score"
+            }
+        ],
+
+
+        "__thirdHeader":"At game",
+
+        "drawing": [
+            {
+                "__title":"team1__drawing"
+            },
+            {
+                "__title":"team2__drawing"
+            }
+        ]
+    }
+}
