@@ -51,9 +51,6 @@ joinButton.addEventListener('click',(evt) => {
         messages.innerHTML += `<p>${dataText.text}</p>`
         textInput.disabled = false;
         players = dataText.players
-        playersList.innerHTML += dataText.players.map((val) => {
-            return `<p>${val}</p>`
-        })
         body.removeChild(createDiv)
         body.removeChild(joinDiv)
         body.append(chatDiv)
