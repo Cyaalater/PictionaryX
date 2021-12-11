@@ -164,6 +164,7 @@ io.on('connection', (socket) => {
      */
     socket.on('TeamJoin',(data) => {
         if(socketData[socket.id] == undefined) {return;} // Mitigation to ignore any socket that contains no data in the server
+        if(socketData[socket.id].team != undefined || socketData[socket.id].team == data) {return;} // 
         let players_in_team = rooms[socketData[socket.id].room].data.teams[data].players
         if(players_in_team.length < 2){
             players_in_team += socket.id
