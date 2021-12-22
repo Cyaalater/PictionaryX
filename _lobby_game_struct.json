@@ -1,0 +1,45 @@
+[
+    {
+        "UUID_LOBBY":{
+            "name": "USER SELECTED NAME",
+            "id": "UUID_LOBBY",
+            "sockets":[
+
+            ],
+            "teams": [
+                ["socketid1","socketid2"],
+                ["socketid3","socketid3"]
+            ]
+        }
+    },
+    {
+        "UUID_GAME":{
+            "name": "USER SELECTED NAME",
+            "id": "UUID_GAME, might use the same uuid as the lobby",
+            "teams": {
+                "0": {
+                    "0": {"name": "USER SELECTED NAME 1",
+                            "id":"User's new socket id"},
+                    "1": {"name": "USER SELECTED NAME 2",
+                            "id":"User's new socket id"}
+                },
+                "2":{
+                    "0": {"name": "USER SELECTED NAME 3",
+                        "id":"User's new socket id"},
+                    "1": {"name": "USER SELECTED NAME 4",
+                        "id":"User's new socket id"}
+                    }
+            },
+            "data": {
+                "0": {
+                    "score": 0,
+                    "current_role": "0"
+                },
+                "1": {
+                    "score": 0,
+                    "current_role": "0"
+                }
+            }
+        }
+    }
+]
