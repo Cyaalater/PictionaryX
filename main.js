@@ -75,6 +75,9 @@ app.get('/game', (req, res) => {
 app.get('/canvas', (req, res) => {
     res.sendFile('./src/canvas.html', { root: __dirname })
 })
+app.get('/test',(req,res) => {
+    res.sendFile('./src/test.html', {root:__dirname})
+})
 
 app.use((req, res) => {
     res.sendFile('./src/404.html', { root: __dirname });
@@ -170,6 +173,10 @@ io.on('connection', (socket) => {
             players_in_team += socket.id
         }
         io.to(socketData[socket.id].room).emit("textSend",{name:socketData[socket.id].name,text:`Joined team ${data}`})
+    })
+
+    socket.on('canvas',(data) => {
+        io.sockets.emit('canvasData',(data))
     })
 })
 
