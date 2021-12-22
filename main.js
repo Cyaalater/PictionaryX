@@ -88,10 +88,10 @@ let server = app.listen(3000, () => {
 var io = Socket(server)
 io.on('connection', (socket) => {
 
-    console.log(`Hello, ${socket.id}}`)
+    //console.log(`Hello, ${socket.id}}`)
 
     socket.on('newPlayer', function (data,callback) {
-        console.log(data)
+        //console.log(data)
         if (data.name.length < 6) {return;} // Name length needs to be above 6 letters
         socketData[socket.id] = {
             room:'',
@@ -128,7 +128,7 @@ io.on('connection', (socket) => {
         }
         rooms[newRoom.id] = newRoom
         joinRoom(socket, newRoom)
-        console.log(rooms)
+        //console.log(rooms)
         callback(`LOBBY ID: ${newRoom.id}\nNAME: ${roomName}`)
     })
 
@@ -153,7 +153,7 @@ io.on('connection', (socket) => {
 
     socket.on('sendText', (textValue) => {
         if(socketData[socket.id] == undefined) {return;} // Mitigation to ignore any socket that contains no data in the server
-        console.log(`Group id:\n${JSON.stringify(socketData[socket.id].room)}\nText: ${textValue}`)
+        //console.log(`Group id:\n${JSON.stringify(socketData[socket.id].room)}\nText: ${textValue}`)
         // const room = rooms[socket.roomId]
         // const roomSocketId = room.id
         io.to(socketData[socket.id].room).emit("textSend",{name:socketData[socket.id].name,text:textValue})
@@ -164,11 +164,12 @@ io.on('connection', (socket) => {
      */
     socket.on('TeamJoin',(data) => {
         if(socketData[socket.id] == undefined) {return;} // Mitigation to ignore any socket that contains no data in the server
-        if(socketData[socket.id].team != undefined || socketData[socket.id].team == data) {return;} // 
+        if(socketData[socket.id].team == data) {return;} // 
         let players_in_team = rooms[socketData[socket.id].room].data.teams[data].players
         if(players_in_team.length < 2){
             players_in_team += socket.id
         }
+        io.to(socketData[socket.id].room).emit("textSend",{name:socketData[socket.id].name,text:`Joined team ${data}`})
     })
 })
 

@@ -31,6 +31,13 @@ textButton.innerText = "Send"
 chatDiv.append(textInput,textButton,messages)
 chatDiv.id = "chat"
 
+var teamDiv = document.createElement("div")
+var team1Button = Object.assign(document.createElement("button"),{id:"team1_button"})
+var team2Button = Object.assign(document.createElement("button"),{id:"team2_button"})
+team1Button.innerHTML = "Team 1"
+team2Button.innerHTML = "Team 2"
+teamDiv.append(team1Button,team2Button)
+teamDiv.div = "team_div"
 
 var playersList = document.querySelector(".column-right") 
 var players = [] // Player names
@@ -54,6 +61,7 @@ joinButton.addEventListener('click',(evt) => {
         body.removeChild(createDiv)
         body.removeChild(joinDiv)
         body.append(chatDiv)
+        body.append(teamDiv)
     })
 })
 
@@ -69,7 +77,15 @@ createButton.addEventListener('click',(event) => {
         body.removeChild(createDiv)
         body.removeChild(joinDiv)
         body.append(chatDiv)
+        body.append(teamDiv)
     })
+})
+
+team1Button.addEventListener('click',() => {
+    socket.emit('TeamJoin',1)
+})
+team2Button.addEventListener('click',() => {
+    socket.emit('TeamJoin',2)
 })
 
 socket.on('textSend',(data) => {
